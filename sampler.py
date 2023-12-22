@@ -1,5 +1,5 @@
 import random, math
-from settings import N, T_0, T_program
+from settings import N, T_0, T_program, k
 from program_manager import getprogramlength
 
 """
@@ -46,10 +46,11 @@ def sample(island: dict, island_id):
         maxlength = max(list(other_program_lengths.values()))
         weight = math.exp((this_program_length - minlength) / (maxlength + 00000.1) / T_program)
         weights.append(weight)
-    selected_program_1 = random.choices(program_ids, weights)
-    index_1 = program_ids.index(selected_program_1)
-    del program_ids[index_1]
-    del weights[index_1]
-    selected_program_2 = random.choices(program_ids, weights)
-
-    return [selected_program_1, selected_program_2]
+    selected_programs = []
+    while len(selected_programs) < k:
+        selected_program = random.choices(program_ids, weights)
+        index = program_ids.index(selected_program)
+        selected_programs.append([selected_program, selected_signature])
+        del program_ids[index]
+        del weights[index]
+    return selected_programs
