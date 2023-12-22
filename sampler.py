@@ -7,7 +7,7 @@ programs in islands are stored in the following format:
 {"[a,b,c,d...]"(cluster):[program (highest score), ..., program (lowest score)]}
 programs are stored based on IDs
 """
-def sample(island: dict):
+def sample(island: dict, island_id):
 
     # choosing cluster
     cluster_scores = {}
@@ -37,7 +37,7 @@ def sample(island: dict):
     program_lengths = {}
     program_ids = island[selected_signature]
     for ids in program_ids:
-        program_lengths[ids] = -getprogramlength(ids)
+        program_lengths[ids] = -getprogramlength(ids, island_id)
     for ids in program_ids:
         this_program_length = program_lengths[ids]
         other_program_lengths = program_lengths
